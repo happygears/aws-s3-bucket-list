@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Amazon Bucket listing</title>
+		<!-- build:js -->
+		<!-- endbuild -->
+		<!-- build:css -->
+		<!-- endbuild -->
+		<script>
+			window.appConfig = {
+				// debugUrl: location.origin + '/data.xml',
+				exclude: [
+					/^index.html$/i,
+					/noarch\.rpm$/i
+				]
+			};
+		</script>
+	</head>
+	<body>
+		<div id="bucket_list"></div>
+		<div class="amazon">Amazon S3 Bucket list v 0.1</div>
+	</body>
+</html>
