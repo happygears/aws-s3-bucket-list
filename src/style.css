@@ -57,6 +57,7 @@
 .icon-folder:before { content: '\e801'; } /* '' */
 .icon-doc-inv:before { content: '\f15b'; } /* '' */
 
+
 #bucket_list {
   line-height: 26px;
   font-size:  16px; 
@@ -131,6 +132,9 @@
   flex: none;
 } 
 
-.amazon {
+.footer {
   padding: 5px 0;
+  margin: 20px 0 0 0 ;
+  font-size: 14px;
+  text-align: left;
 }

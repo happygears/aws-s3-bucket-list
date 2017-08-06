@@ -3,6 +3,7 @@
   }
 
 (function() {
+  const VERSION = '0.1.1';
 
   function addCssClass(node, className) {
     if (!hasCssClass(node, className)) {
@@ -112,14 +113,31 @@
       request.send(null);
     }
 
+    _renderFooter () {
+      let footerText = 'Amazon S3 Bucket list v :version';
+
+      if (this._config.footerText !== false) {
+        footerText = this._config.footerText || footerText;
+
+        return `<p class="footer">${footerText.replace(':version', VERSION)}</p>`
+      }
+
+      return '';
+    }
+
     _renderToContainer () {
       const openedDefault = this._config.defaultOpenedLevel || 1;
       const columns = this._config.columns || {size: 1, lastmod: 1};
       const hideRoot = +(this._config.rootFolderName === false);
       const infoRows = [];
       const padding = 10;
-      var counter = 0;
-      this._container.innerHTML = renderFolder(this._data, 0);
+      let counter = 0;
+      let content;
+      
+      content = renderFolder(this._data, 0);
+      content += this._renderFooter();
+      
+      this._container.innerHTML = content;
       
       setTimeout(this._highlight.bind(this), 0);
       
