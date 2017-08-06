@@ -57,13 +57,17 @@
 .icon-folder:before { content: '\e801'; } /* '' */
 .icon-doc-inv:before { content: '\f15b'; } /* '' */
 
+body {
+  margin: 0;
+  padding: 5px;
+  background: #f3f3f3;
+}
 
 #bucket_list {
   line-height: 26px;
   font-size:  16px; 
   background: #f3f3f3;
   font-family: Courier New, Courier, monospace;
-  border: 1px solid #4f86af;
   padding: 5px;
 }
 
