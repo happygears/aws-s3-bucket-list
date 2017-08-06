@@ -39,6 +39,11 @@
       const app = this;
       this._container.addEventListener('click', function(event) {
         const target = event.target;
+        
+        if (hasCssClass(event.target.parentNode, 'node--root')) {
+          event.preventDefault();
+          return false;
+        }
 
         if (hasCssClass(event.target, 'node__name--folder')) {
           const folder = event.target.parentNode;
@@ -99,7 +104,7 @@
         let data 
         data = App.transformXmlToJSON(this.responseXML);
         data = App.filterData(data, app._config.exclude);
-        data = App.makeTree(data, app._url);
+        data = App.makeTree(data, app._url, app._config.rootFolderName === 'domain' ? app._url : app._config.rootFolderName);
         app._data = data;
         app._onData(data);
       };
@@ -110,6 +115,7 @@
     _renderToContainer () {
       const openedDefault = this._config.defaultOpenedLevel || 1;
       const columns = this._config.columns || {size: 1, lastmod: 1};
+      const hideRoot = +(this._config.rootFolderName === false);
       const infoRows = [];
       const padding = 10;
       var counter = 0;
@@ -124,13 +130,17 @@
           content: '',
           name: '',
           left: counter + 1,
-          right: 0
+          right: 0,
+          padding: padding * (folderLevel - hideRoot)
         };
 
         ++counter;
 
         if (folderLevel === 0) {
           options.nodeMod.push('node--root', 'node--folder-opened');
+          if (hideRoot) {
+            options.nodeMod.push('node--root-hidden');
+          }
         }
 
         if (folderLevel <= openedDefault) {
@@ -162,7 +172,7 @@
         }
 
         return `
-          <div style="padding-left: ${padding * folderLevel}px" data-left="${options.left}" data-right="${options.right}" class="node${' ' + options.nodeMod.join(' ')}">
+          <div style="padding-left: ${options.padding}px" data-left="${options.left}" data-right="${options.right}" class="node${' ' + options.nodeMod.join(' ')}">
             ${options.name}${info.join('')}
           </div>
           ${options.content}`;
@@ -193,12 +203,12 @@
       return  size + ' ' + measure;
     }
 
-    static makeTree(list, baseUrl = '/') {
+    static makeTree(list, baseUrl = '/', rootFolderName) {
       const isFolderRegexp = /\/$/;
       let rootFolder, targetFolder;
       
       rootFolder = {
-        name: baseUrl,
+        name: rootFolderName,
         list: [],
         url : baseUrl.replace(/\/$/, ''),
         lastmod: '',

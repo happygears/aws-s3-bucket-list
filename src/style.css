@@ -89,6 +89,10 @@
   display: flex;
 }
 
+.node.node.node--root.node--root-hidden {
+  display: none !important;
+}
+
 .node__name {
   overflow: hidden;
   white-space: nowrap;
