@@ -109,6 +109,7 @@
 
     _renderToContainer () {
       const openedDefault = this._config.defaultOpenedLevel || 1;
+      const columns = this._config.columns || {size: 1, lastmod: 1};
       const infoRows = [];
       const padding = 10;
       var counter = 0;
@@ -117,6 +118,7 @@
       setTimeout(this._highlight.bind(this), 0);
       
       function renderFolder(node, folderLevel) {
+        const info = [];
         const options = {
           nodeMod: [],
           content: '',
@@ -125,7 +127,7 @@
           right: 0
         };
 
-        counter++;
+        ++counter;
 
         if (folderLevel === 0) {
           options.nodeMod.push('node--root', 'node--folder-opened');
@@ -149,17 +151,19 @@
           options.nodeMod.push('node--file');
         }
         
-        counter++;
-        options.right = counter;
+        options.right = ++counter;
 
-        let info = `
-            <span class="node__info-value">${App.niceSize(node.size)}</span>
-            <span class="node__info-value">${node.lastmod}</span>
-        `;
+        if (columns.size) {
+          info.push(`<span class="node__info-value">${App.niceSize(node.size)}</span>`);
+        }
+
+        if (columns.lastmod) {
+          info.push(`<span class="node__info-value">${node.lastmod}</span>`);
+        }
 
         return `
           <div style="padding-left: ${padding * folderLevel}px" data-left="${options.left}" data-right="${options.right}" class="node${' ' + options.nodeMod.join(' ')}">
-            ${options.name}${info}
+            ${options.name}${info.join('')}
           </div>
           ${options.content}`;
       }
