@@ -108,7 +108,7 @@
     }
 
     _renderToContainer () {
-      const openedDefault = 10;
+      const openedDefault = this._config.defaultOpenedLevel || 1;
       const infoRows = [];
       const padding = 10;
       var counter = 0;
@@ -134,7 +134,7 @@
         if (folderLevel <= openedDefault) {
             options.nodeMod.push('node--visible');
             
-            if (node.list) {
+            if (node.list && folderLevel < openedDefault) {
               options.nodeMod.push('node--folder-opened');
             }
         }

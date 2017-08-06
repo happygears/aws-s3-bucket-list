@@ -7,10 +7,11 @@
 		<!-- endbuild -->
 		<script>
 			window.appConfig = {
-				// debugUrl: location.origin + '/data.xml',
+				debugUrl: location.origin + '/data.xml',
+				defaultOpenedLevel: 1, // This value is default
 				exclude: [
 					/^index.html$/i,
-					/noarch\.rpm$/i
+					/\/[-].*$/
 				]
 			};
 		</script>
