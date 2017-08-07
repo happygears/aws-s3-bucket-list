@@ -136,7 +136,7 @@
       
       content = renderFolder(this._data, 0);
       content += this._renderFooter();
-      
+
       this._container.innerHTML = content;
       
       setTimeout(this._highlight.bind(this), 0);
@@ -245,7 +245,7 @@
               name: chunkName,
               lastmod: node.lastmod,
               url: targetFolder.url + '/' + chunkName,
-              size: index + 1 === parts.length ? node.size : 0
+              size: index + 1 === parts.length ? parseInt(node.size, 10) : 0
             };
 
             if (index + 1 < parts.length || isFolderRegexp.test(node.name)) {
@@ -279,7 +279,23 @@
         return folder;
       }
 
-      return sortFolder(rootFolder);
+      function calcSizes (node) {
+        if (node.list) {
+          const size = node.list.reduce(function(sum, item) {
+            return sum + calcSizes(item);
+          }, 0);
+
+          node.size = size;
+          return size;
+        }
+
+        return node.size;
+      }
+
+      sortFolder(rootFolder);
+      calcSizes(rootFolder);
+
+      return rootFolder;
     }
 
     static transformXmlToJSON (xml) {
