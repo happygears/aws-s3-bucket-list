@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>Amazon Bucket listing</title>
+		<script>
+			window.appConfig = {
+				// debugUrl: location.origin + '/data.xml',
+				appId: 'bucket_list',
+				columns: {
+					size: true,
+					lastmod: true
+				}, //default visible columns set false for hide column
+				defaultOpenedLevel: 1, // This value is default
+				rootFolderName: false, // set false to prevent rendering domain name as rootFolder
+				footerText: false, //set this option to false for hide or remove for default text
+				exclude: [
+					/^index.html$/i,
+					/\/[-].*$/
+				]
+			};
+		</script>
+	</head>
+	<body>
+		<div id="bucket_list"></div>
+	</body>
+</html>

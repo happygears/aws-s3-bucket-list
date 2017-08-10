@@ -1,0 +1,87 @@
+@import './fontello-embed';
+
+body {
+  margin: 0;
+  padding: 5px;
+  background: #f3f3f3;
+}
+
+#bucket_list {
+  line-height: 26px;
+  font-size:  16px; 
+  background: #f3f3f3;
+  font-family: Courier New, Courier, monospace;
+  padding: 5px;
+}
+
+.node {
+  display: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.node:last-child {
+  border-bottom: none;
+}
+
+.node--odd {
+  background: #f7f7f7;
+}
+
+.node--even {
+  background: #f3f3f3;
+}
+
+.node.node--visible,
+.node.node--folder-opened,
+.node.node--root {
+  display: flex;
+}
+
+.node.node.node--root.node--root-hidden {
+  display: none !important;
+}
+
+.node__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 20px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.node__name--file {
+  color: #4f86af;
+  text-decoration: none;
+}
+
+.node__name--file i,
+.node__name--file i:before {
+  color: #4f86af;
+}
+
+.node__name--file:hover {
+  text-decoration: underline;
+}
+
+.node__name--folder {
+  display: block;
+  cursor: pointer;
+  flex: auto;
+}
+
+.node__info-value {
+  text-align: right;
+  margin-left: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  flex: none;
+} 
+
+.footer {
+  padding: 5px 0;
+  margin: 20px 0 0 0 ;
+  font-size: 14px;
+  text-align: left;
+}
