@@ -1,13 +1,13 @@
 {
   "name": "aws-s3-bucket-list",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
     "serve": "webpack-dev-server --open",
     "build:production": "NODE_ENV=prod webpack --optimize-minimize"
   },
-  "author": "",
+  "author": "Ivan Maerle",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
