@@ -1,0 +1,26 @@
+{
+  "name": "aws-s3-bucket-list",
+  "description": "Easily display folders and files in Amazon S3 bucket",
+  "main": [
+    "./dist/aws-bucket-list.min.js",
+    "./dist/aws-bucket-list.min.css"
+  ],
+  "authors": [
+    "ahules <ahules@gmail.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "amazons3",
+    "s3",
+    "amazon",
+    "s3 bucket list"
+  ],
+  "homepage": "https://github.com/happygears/aws-s3-bucket-list",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

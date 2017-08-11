@@ -12,7 +12,7 @@ const env = process.env.NODE_ENV || 'dev';
 const isDev = env === 'dev';
 
 const extractStyles = new ExtractTextPlugin({
-    filename: '[name].css',
+    filename: 'aws-bucket-list.css',
     disable: process.env.NODE_ENV === 'dev'
 });
 
