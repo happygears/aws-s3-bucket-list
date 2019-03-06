@@ -57,7 +57,12 @@ module.exports = (env, argv) => {
 				new UglifyJsPlugin({
 					cache: true,
 					parallel: true,
-					sourceMap: isDev
+					sourceMap: false,
+					uglifyOptions: {
+						compress: {
+							drop_console: true,
+						}
+					}
 				}),
 				new OptimizeCSSAssetsPlugin({})
 			]
