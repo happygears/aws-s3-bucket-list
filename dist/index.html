@@ -3,7 +3,7 @@
 		<title>Amazon Bucket listing</title>
 		<script>
 			window.appConfig = {
-				// debugUrl: location.origin + '/data.xml',
+				debugUrl: 'https://netspyglass-downloads.s3.amazonaws.com/',
 				appId: 'bucket_list',
 				columns: {
 					size: true,
@@ -13,12 +13,22 @@
 				rootFolderName: false, // set false to prevent rendering domain name as rootFolder
 				footerText: false, //set this option to false for hide or remove for default text
 				exclude: [
-					/^index.html$/i,
-					/\/[-].*$/
+				/\/-[0-9a-z]{5}$/i,
+                /^.*\.html$/i,
+                /^.*\.css$/i,
+                /^.*\.js$/i,
+                /^.*-3-builds.*$/i,
+                /^.*-test-builds.*$/i,
+                /^.*-2\.0\.4.*$/i,
+                /^.*-2\.2\.0.*$/i,
+                /^jobs.*$/i,
+                /^db_migration.*$/i,
+                /^grafana-plugin.*$/i,
+                /\/[-].*$/
 				]
 			};
 		</script>
-	<link href="aws-bucket-list.css" rel="stylesheet"></head>
+	<link href="aws-bucket-list.min.css" rel="stylesheet"></head>
 	<body>
 		<div id="bucket_list"></div>
 	<script type="text/javascript" src="aws-bucket-list.min.js"></script></body>

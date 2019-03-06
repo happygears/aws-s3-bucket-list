@@ -1,7 +1,7 @@
-import App from './app/app.js';
+import { App } from './app/app.js';
 import './assets/main.less';
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     const config = window.appConfig;
     const container = document.getElementById(config.appId);
     const url = config.debugUrl ? config.debugUrl : location.origin;

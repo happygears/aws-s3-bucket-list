@@ -8,17 +8,12 @@ Via [bower](https://github.com/happygears/aws-s3-bucket-list/blob/master/bower.j
 ```
 bower install aws-s3-bucket-list --save
 ```
-
 Via a public CDN:
-##### cdn.rawgit.com
-```html
-<link crossorigin="anonymous" href="https://cdn.rawgit.com/happygears/aws-s3-bucket-list/6bb73518/dist/aws-bucket-list.css" media="all" rel="stylesheet" />
-<script src="https://cdn.rawgit.com/happygears/aws-s3-bucket-list/6bb73518/dist/aws-bucket-list.min.js"></script>
-```
+
 ##### jsdelivr.net
 ```html
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/happygears/aws-s3-bucket-list@v0.1/dist/aws-bucket-list.min.css" media="all" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/gh/happygears/aws-s3-bucket-list@v0.1/dist/aws-bucket-list.min.js"></script>
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/happygears/aws-s3-bucket-list@v0.2/dist/aws-bucket-list.min.css" media="all" rel="stylesheet" />
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/gh/happygears/aws-s3-bucket-list@v0.2/dist/aws-bucket-list.min.js"></script>
 ```
 
 ##### Downloading Manually:
@@ -29,7 +24,7 @@ If you want the latest stable version, get js and css files from dist folder.
 <head>
     <title>Amazon Bucket listing</title>
     <script>
-    <link href="aws-bucket-list.css" rel="stylesheet">
+    <link href="aws-bucket-list.min.css" rel="stylesheet">
     <script type="text/javascript" src="aws-bucket-list.min.js"></script>
         window.appConfig = {
             // debugUrl: location.origin + '/data.xml',
@@ -55,6 +50,8 @@ If you want the latest stable version, get js and css files from dist folder.
 ```
 
 ### Development
-Coming soon...
-
-### License
+npm install
+Install dependencies first, then run one of the following commands to build the project.
+npm run serve
+npm run build:development 
+npm run build:production

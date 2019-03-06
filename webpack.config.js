@@ -1,81 +1,91 @@
-const ExtractTextPlugin  = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CleanCSSPlugin     = require('less-plugin-clean-css');
-const HtmlWebpackPlugin  = require('html-webpack-plugin');
-const CopyWebpackPlugin  = require('copy-webpack-plugin');
-const UglifyJSPlugin     = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const webpack = require('webpack');
 const path = require('path');
 
-const env = process.env.NODE_ENV || 'dev';
-const isDev = env === 'dev';
 
-const extractStyles = new ExtractTextPlugin({
-    filename: 'aws-bucket-list.css',
-    disable: process.env.NODE_ENV === 'dev'
-});
+module.exports = (env, argv) => {
+	const isDev = argv.mode === 'development';
+	const extractStyles = new MiniCssExtractPlugin({
+		filename: 'aws-bucket-list.min.css',
+		chunkFilename: '[id].css'
+	});
 
-const cleanPlugin = new CleanWebpackPlugin(['dist']);
-const cleanStyles = new CleanCSSPlugin({advanced: true});
-const htmlPlugin = new HtmlWebpackPlugin({
-    title: 'Amazon Bucket listing',
-    template: 'src/index.html'
-});
-const copyPlugin = new CopyWebpackPlugin(isDev ? [{from: './src/data.xml'}] : []);
-const distPath = path.resolve(__dirname, isDev ? 'dist_dev' : 'dist');
+	const cleanPlugin = new CleanWebpackPlugin();
+	const htmlPlugin = new HtmlWebpackPlugin({
+		title: 'Amazon Bucket listing',
+		template: 'src/index.html'
+	});
 
+	const copyPlugin = new CopyWebpackPlugin(isDev ? [{from: './src/data.xml'}] : []);
+	const distPath = path.resolve(__dirname, isDev ? 'dist_dev' : 'dist');
 
-const plugins = [
-    cleanPlugin,
-    extractStyles,
-    htmlPlugin,
-    copyPlugin
-];
+	const plugins = [
+		cleanPlugin,
+		extractStyles,
+		htmlPlugin,
+		copyPlugin
+	];
 
-if (isDev) {
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+	if (isDev) {
+		plugins.push(new webpack.HotModuleReplacementPlugin());
+	}
+
+	return {
+		mode: argv.mode,
+		entry: './src/index.js',
+		output: {
+			filename: 'aws-bucket-list.min.js',
+			path: distPath
+		},
+
+		devServer: {
+			contentBase: path.join(__dirname, 'dist'),
+			compress: true,
+			port: 9777
+		},
+
+		devtool: isDev ? 'inline-source-map' : false,
+
+		optimization: {
+			minimizer: isDev ? [] : [
+				new UglifyJsPlugin({
+					cache: true,
+					parallel: true,
+					sourceMap: isDev
+				}),
+				new OptimizeCSSAssetsPlugin({})
+			]
+		},
+
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					exclude: /(node_modules|bower_components)/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env']
+						}
+					}
+				},
+				{
+					test: /\.less$/,
+					use: [
+						{loader: isDev ? 'style-loader' : MiniCssExtractPlugin.loader},
+						{loader: 'css-loader'},
+						{loader: 'less-loader'}
+					]
+				}
+			]
+		},
+
+		plugins: plugins
+	};
 }
-
-module.exports = {
-    entry: './src/index.js',
-    output: {
-        filename: 'aws-bucket-list.min.js',
-        path: distPath
-    },
-    
-    devtool: isDev ? 'inline-source-map' : false,
-    
-    devServer: isDev ? {
-        contentBase: distPath,
-        hot: true,
-        port: 9992
-    } : {},
-
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env']
-                    }
-                }
-            },
-            {
-                test: /\.less$/,
-                use: extractStyles.extract({
-                    use: [
-                        {loader: 'css-loader'},
-                        {loader: 'less-loader', options: {plugins: [cleanStyles]}}
-                    ],
-                    fallback: 'style-loader'
-                })
-            }
-        ]
-    },
-
-    plugins: plugins
-};

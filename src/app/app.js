@@ -21,7 +21,7 @@ function hasCssClass(node, className) {
   return node.getAttribute('class').indexOf(className) !== -1;
 }
 
-export default class App {
+export class App {
   constructor(container, url, config) {
     this._onData = this._renderToContainer;
     this._container = container;
@@ -100,8 +100,12 @@ export default class App {
     request.responseType = 'document';
 
     request.onload = function () {
-      let data
+      let data;
       data = App.transformXmlToJSON(this.responseXML);
+
+      console.log(data);
+      
+
       data = App.filterData(data, app._config.exclude);
       data = App.makeTree(data, app._url, app._config.rootFolderName === 'domain' ? app._url : app._config.rootFolderName);
       app._data = data;
