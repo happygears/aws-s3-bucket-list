@@ -18,7 +18,9 @@ function removeCssClass(node, className) {
 
 function hasCssClass(node, className) {
   // be carefull this method does not work in some cases
-  return node.getAttribute('class').indexOf(className) !== -1;
+  return node &&
+    node.getAttribute('class') &&
+    node.getAttribute('class').indexOf(className) !== -1;
 }
 
 export class App {
@@ -102,10 +104,6 @@ export class App {
     request.onload = function () {
       let data;
       data = App.transformXmlToJSON(this.responseXML);
-
-      console.log(data);
-      
-
       data = App.filterData(data, app._config.exclude);
       data = App.makeTree(data, app._url, app._config.rootFolderName === 'domain' ? app._url : app._config.rootFolderName);
       app._data = data;
